@@ -32,23 +32,28 @@
         public function fastsync() : FastSync {
             return new FastSync($this->raw_call("fastsync", "GET"));
         }
-
-        public function __construct(string $remote, string $token) {
-            $this->_remote = $remote;
-            $this->_headers = ["Authorization: Bearer $token", "Content-Type: application/json"];
+        private static function create_shared(): \CurlSharePersistentHandle|\CurlShareHandle {
             if (function_exists("curl_share_init_persistent")) {
-                $this->_curl_shared = curl_share_init_persistent([
+                return curl_share_init_persistent([
                     CURL_LOCK_DATA_CONNECT,
                     CURL_LOCK_DATA_DNS,
                     CURL_LOCK_DATA_SSL_SESSION
                 ]);
             }
             else {
-                $this->_curl_shared = curl_share_init();
-                curl_share_setopt($this->_curl_shared, CURLSHOPT_SHARE, CURL_LOCK_DATA_CONNECT);
-                curl_share_setopt($this->_curl_shared, CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
-                curl_share_setopt($this->_curl_shared, CURLSHOPT_SHARE, CURL_LOCK_DATA_SSL_SESSION);
+                $ret = curl_share_init();
+                curl_share_setopt($ret, CURLSHOPT_SHARE, CURL_LOCK_DATA_CONNECT);
+                curl_share_setopt($ret, CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
+                curl_share_setopt($ret, CURLSHOPT_SHARE, CURL_LOCK_DATA_SSL_SESSION);
+                return $ret;
             }
+        }
+
+        public function __construct(string $remote, string $token) {
+            $this->_remote = $remote;
+            $this->_headers = ["Authorization: Bearer $token", "Content-Type: application/json"];
+            static $curl_shared = Remote::create_shared();
+            $this->_curl_shared = $curl_shared;
 
         }
     }
