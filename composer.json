@@ -1,0 +1,12 @@
+{
+    "name": "tpex/tpex",
+    "description": "The TPEx PHP interface",
+    "type": "library",
+    "license": "AGPL-3.0",
+    "autoload": {
+        "psr-4": {
+            "TPEx\\TPEx\\": "src/"
+        }
+    },
+    "require": {}
+}
