@@ -6,4 +6,4 @@ composer.phar
 composer.lock
 
 # Personal testing file
-foo.php
+token.txt
