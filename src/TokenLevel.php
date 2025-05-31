@@ -1,4 +1,4 @@
-<?php namespace TPEX\TPEX;
+<?php namespace TPEx\TPEx;
     enum TokenLevel : int {
         case ProxyAll = 2;
         case ProxyOne = 1;
