@@ -11,13 +11,16 @@
         "player"=>"cyclic3",
         "n_diamonds"=>1,
     ]);
-    $remote->apply("BuyOrder", [
+    $order_id = $remote->apply("BuyOrder", [
         "player"=>"cyclic3",
         "asset"=>"cobblestone",
         "count"=>10,
-        "coins_per"=>"10c"
+        "coins_per"=>"5c"
     ]);
     $state = $remote->fastsync();
     print($state->player_balance("cyclic3") . "\n");
     print(json_encode($state->raw));
+    $remote->apply("CancelOrder", [
+        "target"=>$order_id
+    ])
 ?>
