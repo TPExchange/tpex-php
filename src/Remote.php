@@ -22,7 +22,7 @@
             }
             return json_decode($data, true);
         }
-        
+
         public function apply(string $action, array $params, ?int $id = null) : int {
             return $this->raw_call(is_null($id) ? "state" : "state?id=$id", "PATCH", [$action => $params]);
         }
@@ -32,7 +32,7 @@
         public function fastsync() : FastSync {
             return new FastSync($this->raw_call("fastsync", "GET"));
         }
-        
+
         public function __construct(string $remote, string $token) {
             $this->_remote = $remote;
             $this->_headers = ["Authorization: Bearer $token", "Content-Type: application/json"];
@@ -49,7 +49,7 @@
                 curl_share_setopt($this->_curl_shared, CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
                 curl_share_setopt($this->_curl_shared, CURLSHOPT_SHARE, CURL_LOCK_DATA_SSL_SESSION);
             }
-            
+
         }
     }
 ?>
