@@ -26,7 +26,7 @@
         public function apply(string $action, array $params, ?int $id = null) : int {
             return $this->raw_call(is_null($id) ? "state" : "state?id=$id", "PATCH", [$action => $params]);
         }
-        public function create_token(string $user, TokenLevel $level) : int {
+        public function create_token(string $user, TokenLevel $level) : string {
             return $this->raw_call("token", "POST", ["user" => $user, "level" => $level->value]);
         }
         public function fastsync() : FastSync {
