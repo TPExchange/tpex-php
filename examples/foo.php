@@ -2,12 +2,13 @@
     require_once("../vendor/autoload.php");
     // Connect to the staging server
     $remote = new TPEx\TPEx\Remote("https://tpex-staging.cyclic3.dev", trim(file_get_contents("token.txt")));
+    var_dump($remote->state());
     // Deposit items
     $remote->apply("Deposit", [
         "player"=>"cyclic3",
         "asset"=>"diamond",
         "count"=>1,
-        "banker"=>"#tpex"
+        "banker"=>"/"
     ]);
     $remote->apply("BuyCoins", [
         "player"=>"cyclic3",
