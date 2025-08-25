@@ -2,7 +2,6 @@
     require_once("../vendor/autoload.php");
     // Connect to the staging server
     $remote = new TPEx\TPEx\Remote("https://tpex-staging.cyclic3.dev", trim(file_get_contents("token.txt")));
-    var_dump($remote->state());
     // Deposit items
     $remote->apply("Deposit", [
         "player"=>"cyclic3",
@@ -22,7 +21,8 @@
     ]);
     $state = $remote->fastsync();
     print($state->player_balance("cyclic3") . "\n");
-    print(json_encode($state->raw));
+    print(json_encode($state->raw) . "\n");
+    print(json_encode($remote->itemised_audit()) . "\n");
     $remote->apply("CancelOrder", [
         "target"=>$order_id
     ])

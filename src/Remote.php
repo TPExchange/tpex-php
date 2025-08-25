@@ -44,6 +44,9 @@
         public function fastsync() : FastSync {
             return new FastSync($this->raw_call("fastsync", "GET"));
         }
+        public function itemised_audit() : array {
+            return $this->raw_call("inspect/audit", "GET");
+        }
         private static function create_shared(): \CurlSharePersistentHandle|\CurlShareHandle {
             if (function_exists("curl_share_init_persistent")) {
                 return curl_share_init_persistent([

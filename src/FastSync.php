@@ -2,23 +2,23 @@
     class FastSync {
         public array $raw;
 
-        function player_balance(string $player) : string {
-            return $this->raw["balances"]["balances"][$player] ?? "0c";
+        public function player_balance(string $player) : string {
+            return $this->raw["balance"]["balances"][$player] ?? "0c";
         }
 
-        function player_assets(string $player) : array {
-            return $this->raw["balances"]["assets"][$player] ?? [];
+        public function player_assets(string $player) : array {
+            return $this->raw["balance"]["assets"][$player] ?? [];
         }
 
-        function buy_orders() : array {
+        public function buy_orders() : array {
             return $this->raw["order"]["buy_orders"];
         }
 
-        function sell_orders() : array {
+        public function sell_orders() : array {
             return $this->raw["order"]["buy_orders"];
         }
 
-        function __construct(array $raw) {
+        public function __construct(array $raw) {
             $this->raw = $raw;
         }
     }
