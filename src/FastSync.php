@@ -10,6 +10,10 @@
             return $this->raw["balance"]["assets"][$player] ?? [];
         }
 
+        public function bankers() : array {
+            return $this->raw["shared_account"]["bank"]["owners"];
+        }
+
         public function buy_orders(?string $player = null) : array {
             $data = $this->raw["order"]["buy_orders"];
             if (is_null($player)) {

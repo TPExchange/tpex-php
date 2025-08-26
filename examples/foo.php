@@ -20,6 +20,7 @@
         "coins_per"=>"5c"
     ]);
     $state = $remote->fastsync();
+    var_dump($state->bankers());
     print($state->player_balance("cyclic3") . "\n");
     print(json_encode($state->raw) . "\n");
     print(json_encode($remote->itemised_audit()) . "\n");
