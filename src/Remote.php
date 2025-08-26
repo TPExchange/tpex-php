@@ -29,6 +29,9 @@
         public function create_token(string $user, TokenLevel $level) : string {
             return $this->raw_call("token", "POST", ["user" => $user, "level" => $level->value]);
         }
+        public function raw_state(?int $id = null) : string {
+            return $this->raw_call(is_null($id) ? "state" : "state?id=$id", "GET", null, false);
+        }
         public function state(?int $id = null) : array {
             $res =  $this->raw_call(is_null($id) ? "state" : "state?id=$id", "GET", null, false);
             $split = explode("\n", $res);
