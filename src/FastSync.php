@@ -55,6 +55,14 @@
             }
         }
 
+        public function rates() : array {
+            return $this->raw["rates"];
+        }
+
+        public function restricted_items() : array {
+            return $this->raw["auth"]["restricted"];
+        }
+
         public function __construct(array $raw) {
             $this->raw = $raw;
         }
