@@ -15,7 +15,7 @@
         }
 
         public function sell_orders() : array {
-            return $this->raw["order"]["buy_orders"];
+            return $this->raw["order"]["sell_orders"];
         }
 
         public function __construct(array $raw) {
