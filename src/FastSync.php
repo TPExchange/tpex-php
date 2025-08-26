@@ -10,12 +10,49 @@
             return $this->raw["balance"]["assets"][$player] ?? [];
         }
 
-        public function buy_orders() : array {
-            return $this->raw["order"]["buy_orders"];
+        public function buy_orders(?string $player = null) : array {
+            $data = $this->raw["order"]["buy_orders"];
+            if (is_null($player)) {
+                return $data;
+            }
+
+            $ret = array();
+            foreach ($data as $asset => $levels) {
+                foreach ($levels as $coins => $entries) {
+                    foreach ($entries as $data) {
+                        var_dump($data);
+                        $ret[$data["id"]] = array_merge($data, ["coins" => $coins, "asset" => $asset]);
+                    }
+                }
+            }
+            return $ret;
         }
 
-        public function sell_orders() : array {
-            return $this->raw["order"]["sell_orders"];
+        public function sell_orders(?string $player = null) : array {
+            $data = $this->raw["order"]["sell_orders"];
+
+            $ret = array();
+            foreach ($data as $asset => $levels) {
+                foreach ($levels as $coins => $data)  {
+                    $ret[$data["id"]] = array_merge($data, ["coins" => $coins, "asset" => $asset]);
+                }
+            }
+            return $ret;
+        }
+
+        public function pending_withdrawals(?string $player = null) : array {
+            if (is_null($player)) {
+                return $this->raw["withdrawal"]["pending_withdrawals"];
+            }
+            else {
+                return array_filter(
+                    $this->raw["withdrawal"]["pending_withdrawals"],
+                    function($k, $v) {
+                        return $v["player"] == $player;
+                    },
+                    ARRAY_FILTER_USE_BOTH
+                );
+            }
         }
 
         public function __construct(array $raw) {
