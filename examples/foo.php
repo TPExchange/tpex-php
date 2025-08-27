@@ -2,12 +2,13 @@
     require_once("../vendor/autoload.php");
     // Connect to the staging server
     $remote = new TPEx\TPEx\Remote("https://tpex-staging.cyclic3.dev", trim(file_get_contents("token.txt")));
-    $remote->apply("TransferaAsset", [
-        "payer" => "/",
-        "payee" => "TwoSixes",
-        "asset" => "/%/../../../",
-        "count" => 2
-    ]);
+    var_dump($remote->fastsync()->sell_orders());
+    // $remote->apply("TransferaAsset", [
+    //     "payer" => "/",
+    //     "payee" => "TwoSixes",
+    //     "asset" => "/%/../../../",
+    //     "count" => 2
+    // ]);
     // Deposit items
     // $remote->apply("Deposit", [
     //     "player"=>"cyclic3",

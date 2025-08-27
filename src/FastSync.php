@@ -24,7 +24,6 @@
             foreach ($data as $asset => $levels) {
                 foreach ($levels as $coins => $entries) {
                     foreach ($entries as $data) {
-                        var_dump($data);
                         $ret[$data["id"]] = array_merge($data, ["coins" => $coins, "asset" => $asset]);
                     }
                 }
@@ -37,8 +36,10 @@
 
             $ret = array();
             foreach ($data as $asset => $levels) {
-                foreach ($levels as $coins => $data)  {
-                    $ret[$data["id"]] = array_merge($data, ["coins" => $coins, "asset" => $asset]);
+                foreach ($levels as $coins => $entries) {
+                    foreach ($entries as $data) {
+                        $ret[$data["id"]] = array_merge($data, ["coins" => $coins, "asset" => $asset]);
+                    }
                 }
             }
             return $ret;
