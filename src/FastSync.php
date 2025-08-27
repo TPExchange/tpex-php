@@ -33,6 +33,9 @@
 
         public function sell_orders(?string $player = null) : array {
             $data = $this->raw["order"]["sell_orders"];
+            if (is_null($player)) {
+                return $data;
+            }
 
             $ret = array();
             foreach ($data as $asset => $levels) {
