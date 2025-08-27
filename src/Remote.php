@@ -18,7 +18,7 @@
             $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             if ($curl_errno || $httpcode != 200) {
                 $msg = curl_strerror($curl_errno);
-                throw new \RuntimeException("Failed to patch $msg:$httpcode:$data");
+                throw new \TPEx\TPEx\Error($verb, $data, $httpcode, $msg);
             }
             return $decode_json ? json_decode($data, true) : $data;
         }
@@ -44,7 +44,7 @@
             }
             return $ret;
         }
-        public function fastsync() : FastSync {
+        public function fastsync() : \TPEx\TPEx\FastSync {
             return new FastSync($this->raw_call("fastsync", "GET"));
         }
         public function itemised_audit() : array {
