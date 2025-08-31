@@ -24,6 +24,9 @@
             foreach ($data as $asset => $levels) {
                 foreach ($levels as $coins => $entries) {
                     foreach ($entries as $data) {
+                        if ($data["player"] != $player) {
+                            continue;
+                        }
                         $ret[$data["id"]] = array_merge($data, ["coins" => $coins, "asset" => $asset]);
                     }
                 }
@@ -41,6 +44,9 @@
             foreach ($data as $asset => $levels) {
                 foreach ($levels as $coins => $entries) {
                     foreach ($entries as $data) {
+                        if ($data["player"] != $player) {
+                            continue;
+                        }
                         $ret[$data["id"]] = array_merge($data, ["coins" => $coins, "asset" => $asset]);
                     }
                 }

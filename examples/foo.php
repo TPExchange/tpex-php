@@ -2,8 +2,11 @@
     require_once("../vendor/autoload.php");
     // Connect to the staging server
     $remote = new TPEx\TPEx\Remote("https://tpex-staging.cyclic3.dev", trim(file_get_contents("token.txt")));
-    var_dump($remote->fastsync()->sell_orders());
-    var_dump($remote->fastsync()->buy_orders());
+    $x = $remote->fastsync();
+    var_dump($x->buy_orders());
+    var_dump($x->buy_orders("Cyclic3"));
+    // var_dump($remote->fastsync()->sell_orders());
+    // var_dump($remote->fastsync()->buy_orders());
     // $remote->apply("TransferaAsset", [
     //     "payer" => "/",
     //     "payee" => "TwoSixes",
@@ -12,9 +15,9 @@
     // ]);
     // Deposit items
     // $remote->apply("Deposit", [
-    //     "player"=>"cyclic3",
-    //     "asset"=>"diamond",
-    //     "count"=>1,
+    //     "player"=>"Cyclic3",
+    //     "asset"=>"cobblestone",
+    //     "count"=>16,
     //     "banker"=>"/"
     // ]);
     // $remote->apply("RequestWithdrawal", [
@@ -29,10 +32,10 @@
     //     "n_diamonds"=>1,
     // ]);
     // $order_id = $remote->apply("BuyOrder", [
-    //     "player"=>"cyclic3",
+    //     "player"=>"Cyclic3",
     //     "asset"=>"cobblestone",
-    //     "count"=>10,
-    //     "coins_per"=>"5c"
+    //     "count"=>12,
+    //     "coins_per"=>"16c"
     // ]);
     // $state = $remote->fastsync();
     // var_dump($state->bankers());
