@@ -18,7 +18,7 @@
             $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             if ($curl_errno || $httpcode != 200) {
                 $msg = curl_strerror($curl_errno);
-                throw new \TPEx\TPEx\Error($verb, $data, $httpcode, $msg);
+                throw new \TPEx\TPEx\Error($verb, $data, $endpoint, $httpcode, $msg);
             }
             return $decode_json ? json_decode($data, true) : $data;
         }

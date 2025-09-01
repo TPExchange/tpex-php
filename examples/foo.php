@@ -3,8 +3,9 @@
     // Connect to the staging server
     $remote = new TPEx\TPEx\Remote("https://tpex-staging.cyclic3.dev", trim(file_get_contents("token.txt")));
     $x = $remote->fastsync();
-    var_dump($x->buy_orders());
-    var_dump($x->buy_orders("Cyclic3"));
+    var_dump($x);
+    // var_dump($x->buy_orders());
+    // var_dump($x->buy_orders("Cyclic3"));
     // var_dump($remote->fastsync()->sell_orders());
     // var_dump($remote->fastsync()->buy_orders());
     // $remote->apply("TransferaAsset", [
