@@ -2,15 +2,11 @@
     class Remote {
         private string $_remote;
         private array $_headers;
-        private \CurlSharePersistentHandle|\CurlShareHandle $_curl_shared;
+        private static \CurlSharePersistentHandle|\CurlShareHandle|null $_curl_shared = null;
 
         private function raw_call(string $endpoint, string $verb, object|array|null $body = null, bool $decode_json = true) : array|int|string {
             $ch = curl_init("$this->_remote/$endpoint");
-            if (version_compare(PHP_VERSION, '8.5.0', '>=')) {
-                $sh = curl_share_init_persistent([CURL_LOCK_DATA_DNS, CURL_LOCK_DATA_CONNECT, CURL_LOCK_DATA_SSL_SESSION]);
-                curl_setopt($ch, CURLOPT_SHARE, $sh);
-            }
-            curl_setopt($ch, CURLOPT_SHARE, $this->_curl_shared);
+            curl_setopt($ch, CURLOPT_SHARE, Self::$_curl_shared);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $verb);
             curl_setopt($ch, CURLOPT_HTTPHEADER, $this->_headers);
             if (!is_null($body)) {
@@ -54,29 +50,28 @@
         public function itemised_audit() : array {
             return $this->raw_call("inspect/audit", "GET");
         }
-        private static function create_shared(): \CurlSharePersistentHandle|\CurlShareHandle {
-            if (function_exists("curl_share_init_persistent")) {
-                return curl_share_init_persistent([
-                    CURL_LOCK_DATA_CONNECT,
-                    CURL_LOCK_DATA_DNS,
-                    CURL_LOCK_DATA_SSL_SESSION
-                ]);
-            }
-            else {
-                $ret = curl_share_init();
-                curl_share_setopt($ret, CURLSHOPT_SHARE, CURL_LOCK_DATA_CONNECT);
-                curl_share_setopt($ret, CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
-                curl_share_setopt($ret, CURLSHOPT_SHARE, CURL_LOCK_DATA_SSL_SESSION);
-                return $ret;
-            }
-        }
 
         public function __construct(string $remote, string $token) {
             $this->_remote = $remote;
             $this->_headers = ["Authorization: Bearer $token", "Content-Type: application/json"];
-            static $curl_shared = Remote::create_shared();
-            $this->_curl_shared = $curl_shared;
+            if (is_null(Self::$_curl_shared)) {
+                if (function_exists("curl_share_init_persistent")) {
+                    Self::$_curl_shared = curl_share_init_persistent([
+                        CURL_LOCK_DATA_CONNECT,
+                        CURL_LOCK_DATA_DNS,
+                        CURL_LOCK_DATA_SSL_SESSION
+                    ]);
+                }
+                else {
+                    Self::$_curl_shared = curl_share_init();
+                    curl_share_setopt(Self::$_curl_shared, CURLSHOPT_SHARE, CURL_LOCK_DATA_CONNECT);
+                    curl_share_setopt(Self::$_curl_shared, CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
+                    curl_share_setopt(Self::$_curl_shared, CURLSHOPT_SHARE, CURL_LOCK_DATA_SSL_SESSION);
+                }
+            }
 
         }
+    }
+    if (version_compare(PHP_VERSION, '8.5.0', '>=')) {
     }
 ?>
