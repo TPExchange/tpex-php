@@ -6,6 +6,10 @@
 
         private function raw_call(string $endpoint, string $verb, object|array|null $body = null, bool $decode_json = true) : array|int|string {
             $ch = curl_init("$this->_remote/$endpoint");
+            if (version_compare(PHP_VERSION, '8.5.0', '>=')) {
+                $sh = curl_share_init_persistent([CURL_LOCK_DATA_DNS, CURL_LOCK_DATA_CONNECT, CURL_LOCK_DATA_SSL_SESSION]);
+                curl_setopt($ch, CURLOPT_SHARE, $sh);
+            }
             curl_setopt($ch, CURLOPT_SHARE, $this->_curl_shared);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $verb);
             curl_setopt($ch, CURLOPT_HTTPHEADER, $this->_headers);

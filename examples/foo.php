@@ -1,7 +1,7 @@
 <?php
     require_once("../vendor/autoload.php");
     // Connect to the staging server
-    $remote = new TPEx\TPEx\Remote("https://tpex-staging.cyclic3.dev", trim(file_get_contents("token.txt")));
+    $remote = new TPEx\TPEx\Remote("https://tpex-dev.cyclic3.dev/api", trim(file_get_contents("token.txt")));
     $x = $remote->fastsync();
     var_dump($x);
     // var_dump($x->buy_orders());
