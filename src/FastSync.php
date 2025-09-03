@@ -77,6 +77,25 @@
             return $this->raw["auth"]["restricted"];
         }
 
+        public function shared_accounts() : array {
+            $bank = $this->raw["shared_account"]["bank"] ;
+            $ret = ["/"=>$bank];
+            foreach ($bank["children"] as $name => $child) {
+                $ret["$name"] = $child;
+            }
+            return $ret;
+        }
+
+        public function proposals(?string $target = null) : array {
+            $proposals = $this->raw["shared_account"]["proposals"];
+            if (is_null($shared_account)) {
+                return $proposals;
+            }
+            else {
+                return array_filter(function ($id, $proposal) { return $proposal["target"] == $target; });
+            }
+        }
+
         public function __construct(array $raw) {
             $this->raw = $raw;
         }

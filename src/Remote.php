@@ -72,6 +72,4 @@
 
         }
     }
-    if (version_compare(PHP_VERSION, '8.5.0', '>=')) {
-    }
 ?>
