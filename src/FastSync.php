@@ -81,7 +81,7 @@
             $bank = $this->raw["shared_account"]["bank"] ;
             $ret = ["/"=>$bank];
             foreach ($bank["children"] as $name => $child) {
-                $ret["$name"] = $child;
+                $ret["/$name"] = $child;
             }
             return $ret;
         }

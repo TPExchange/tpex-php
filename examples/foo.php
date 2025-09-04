@@ -5,15 +5,15 @@
     $x = $remote->fastsync();
     // var_dump($remote->create_token("/", \TPEx\TPEx\TokenLevel::ProxyAll));
     // $remote->apply("CreateOrUpdateShared", [
-    //     "name"=>"/",
-    //     "owners"=>["Cyclic3", "TwoSixes", "Charnanigans", "AnomalousAri"],
+    //     "name"=>"/gsp",
+    //     "owners"=>["Cyclic3", "TwoSixes"],
     //     "min_difference"=>1,
     //     "min_votes"=>1,
     // ]);
     // var_dump($x);
     var_dump($x->shared_accounts());
     // var_dump($x->buy_orders("Cyclic3"));
-    // var_dump($remote->fastsync()->sell_orders());
+    // var_dump($remote->fastsync());
     // var_dump($remote->fastsync()->buy_orders());
     // $remote->apply("TransferaAsset", [
     //     "payer" => "/",
