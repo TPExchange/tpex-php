@@ -50,6 +50,9 @@
         public function itemised_audit() : array {
             return $this->raw_call("inspect/audit", "GET");
         }
+        public function price_history(string $asset) : array {
+            return $this->raw_call("price/history?asset=$asset", "GET");
+        }
 
         public function __construct(string $remote, string $token) {
             $this->_remote = $remote;
