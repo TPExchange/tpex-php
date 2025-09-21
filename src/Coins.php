@@ -50,7 +50,11 @@
         }
 
         public function __construct(string $repr) {
+            // Remove commas
+            $repr = str_replace(",", "", $repr);
+            // Remove trailing c
             $repr = rtrim($repr, "c");
+            // Split decimal parts
             $parts = explode(".", $repr);
             $coins = 0;
             $frac = 0;
