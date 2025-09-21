@@ -21,12 +21,21 @@
         }
 
         public function pretty(): string {
-            $locale = \Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? "en_GB");
-            $formatter = new \NumberFormatter($locale, \NumberFormatter::DECIMAL);
-            $ret = $formatter->format(intdiv($this->millicoins, 1000));
+            if (class_exists("\Locale")) {
+                $locale = \Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? "en_GB");
+                $formatter = new \NumberFormatter($locale, \NumberFormatter::DECIMAL);
+                $ret = $formatter->format(intdiv($this->millicoins, 1000));
+                $decimal_sep = $formatter->getSymbol(\NumberFormatter::DECIMAL_SEPARATOR_SYMBOL);
+            }
+            else {
+                $ret = number_format(intdiv($this->millicoins, 1000));
+                $decimal_sep = ".";
+            }
+
             $fractional = $this->millicoins % 1000;
+
             if ($fractional != 0) {
-                $ret .= $formatter->getSymbol(\NumberFormatter::DECIMAL_SEPARATOR_SYMBOL);
+                $ret .= $decimal_sep;
                 if ($fractional % 100 == 0) {
                     $ret .= $fractional / 100;
                 }
