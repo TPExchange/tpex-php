@@ -44,8 +44,13 @@
             }
             return $ret;
         }
-        public function fastsync() : \TPEx\TPEx\FastSync {
-            return new FastSync($this->raw_call("fastsync", "GET"));
+        public function fastsync(?string $cache_file = null) : \TPEx\TPEx\FastSync {
+            if (!is_null($cache_file)) {
+                return \TPEx\TPEx\FastSync::load(file_get_contents($cache_file));
+            }
+            else {
+                return new FastSync($this->raw_call("fastsync", "GET"));
+            }
         }
         public function itemised_audit() : array {
             return $this->raw_call("inspect/audit", "GET");
