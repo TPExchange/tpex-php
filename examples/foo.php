@@ -1,7 +1,7 @@
 <?php
     require_once("../vendor/autoload.php");
-    $x = new \TPEx\TPEx\Coins("100.2c");
-    die($x->pretty());
+    $x = TPEx\TPEx\FastSync::load(file_get_contents("/tmp/fastsync.json"));
+    var_dump($x->raw);
     // Connect to the staging server
     // $remote = new TPEx\TPEx\Remote("https://tpex.cyclic3.dev/api", trim(file_get_contents("token2.txt")));
     // die($remote->create_token("Cyclic3", TPEx\TPEx\TokenLevel::ReadOnly));

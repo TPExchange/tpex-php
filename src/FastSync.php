@@ -99,5 +99,9 @@
         public function __construct(array $raw) {
             $this->raw = $raw;
         }
+
+        public static function load(string $data) : Self {
+            return new Self(json_decode($data, true));
+        }
     }
 ?>
